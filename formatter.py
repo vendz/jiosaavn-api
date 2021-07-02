@@ -42,8 +42,22 @@ def format_song(data):
         artists.append(artist)
     song_data['artists'] = artists
     if data['has_lyrics'] == 'true':
-        song_data['lyrics'] = jiosaavn.getLyrics(data['id'])
+        song_data['lyrics'] = jiosaavn.getLyrics(song_data['id'])
     return song_data
+
+
+def format_playlist(data):
+    playlist_data = {}
+    songs = []
+    playlist_data['name'] = data['listname']
+    playlist_data['followers'] = data['follower_count']
+    playlist_data['image'] = data['image']
+    playlist_data['song_count'] = data['list_count']
+    playlist_data['id'] = data['listid']
+    for song in data['songs']:
+        songs.append(format_song(song))
+    playlist_data['songs'] = songs
+    return playlist_data
 
 
 def stringToArray(raw_data):

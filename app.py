@@ -26,5 +26,24 @@ def song():
         return jsonify(error)
 
 
+@app.route('/playlist')
+def playlist():
+    query = request.args.get('query')
+    if query:
+        return jsonify(jiosaavn.search_for_playlist(query))
+        # try:
+        #     val = int(query)
+        #     return jsonify(jiosaavn.get_playlist(query))
+        # except Exception:
+        #     return jsonify(jiosaavn.search_for_playlist(query))
+    else:
+        error = {
+            'success': False,
+            'message': 'You need to enter a query',
+            'data': [],
+        }
+        return jsonify(error)
+
+
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
